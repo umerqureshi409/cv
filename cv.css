@@ -1,0 +1,123 @@
+user-menu-button {
+    height: 200px;
+    width: 200px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50% ;
+    
+}
+
+body, h1, h2, h3, h4, p, div, a {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+.container{
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+header {
+    
+    color: rgb(22, 16, 16);
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 10px;
+}
+
+header h2 {
+    font-size: 1.2em;
+}
+.contact, .email {
+    display: inline-block;
+    margin: 0 10px;
+    color: #000000;
+}
+
+
+hr {
+    border: 1px solid #00bcd4;
+    margin: 20px 0;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #000000;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #00bcd4;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: white;
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #00796b;
+}
+
+div.inline-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+div.inline-content h3, 
+div.inline-content p {
+    display: inline;
+    margin: 0;
+}
+
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    header, h1, h2, h3, p, div.inline-content {
+        text-align: center;
+    }
+    
+    div.inline-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

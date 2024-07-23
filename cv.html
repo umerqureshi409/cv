@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV</title>
+    <link rel="stylesheet" href="cv.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <div class="container" id="cv">
+        <header>
+            <h1>M.Umer Qureshi</h1>
+            <img src="https://raw.githubusercontent.com/umerqureshi409/MCASEL/main/images/umer.jpeg" style="height: 200px; width: 200px; border: 4px solid #00aad4; border-radius: 50%; 
+             box-shadow: 0px 0px 40px rgba(15, 59, 70, 0.5);" alt="" />
+
+            <h2><span class="contact">Contact: 03213021673</span> <span class="email">Email: aa1660026@gmail.com</span>
+            </h2>
+
+        </header>
+        <hr>
+        <h1>Professional Summary</h1>
+        <p>Dedicated and knowledgeable tutor with expertise in MS Office, ethical hacking, command line, and various
+            Linux distributions, including Kali, Parrot, and Alpine. Possesses hands-on experience in web development
+            with a strong foundation in modern web technologies. Adept at delivering personalized instruction and
+            fostering an engaging learning environment to help students achieve their educational goals.</p>
+        <hr>
+
+        <h1>Professional Experience</h1>
+        <h3>Home Tutor For Microsoft Office & Cyber Security</h3>
+        <p>As an experienced home tutor, I have successfully provided personalized instruction in both MS Office and
+            ethical hacking. My expertise in MS Office covers a comprehensive range of applications, including Word,
+            Excel, PowerPoint, and Outlook, enabling students to gain proficiency in essential office skills. In ethical
+            hacking, I have guided students through the fundamentals of cybersecurity, teaching them about penetration
+            testing, network security, and the ethical implications of hacking. My hands-on approach and tailored
+            teaching methods have consistently helped my students achieve their learning goals and build a strong
+            foundation in these critical areas.</p>
+        <hr>
+
+        <h1>Projects</h1>
+        <h3>Chrome Redesigned</h3>
+        <a href="https://umerqureshi409.github.io/chrome-redesigned">Chrome Redesigned Direct Link</a>
+        <h3>MCASEL Website</h3>
+        <a href="https://umerqureshi409.github.io/MCASEL">MCASEL Direct Link</a>
+        <hr>
+
+        <h1>Educations & Certifications</h1>
+        <h3>Matriculation</h3>
+        <p>The Educators School LatifAbad, Hyderabad</p>
+        <h3>Intermediate</h3>
+        <p>Superior College Of Science, Hyderabad</p>
+        <h3>Under Graduate</h3>
+        <p>Mehran University Of Engineering And Technology</p>
+        <h4>NOTE: My Field selection will be held on 26-07-2024. On that day, I will inform about my department.</h4>
+        <hr>
+
+        <h1>Skills</h1>
+        <div>
+            <h3 style="display: inline;">1. MS Office:</h3>
+            <p style="display: inline;"> Word, Excel, PowerPoint, Outlook.</p>
+        </div>
+        <div>
+            <h3 style="display: inline;">2. Ethical Hacking:</h3>
+            <p style="display: inline;"> Penetration testing, network security, ethical implications.</p>
+        </div>
+        <div>
+            <h3 style="display: inline;">3. Linux Distributions:</h3>
+            <p style="display: inline;"> Kali, Parrot, Alpine.</p>
+        </div>
+        <div>
+            <h3 style="display: inline;">4. Command Line:</h3>
+            <p style="display: inline;"> Proficient in command line operations and scripting.</p>
+        </div>
+        <div>
+            <h3 style="display: inline;">5. Web Development:</h3>
+            <p style="display: inline;"> Next.js, Tailwind CSS, Upstash Redis, HTML, CSS, JavaScript.</p>
+        </div>
+    </div>
+    <button id="downloadBtn">Download as PDF</button>
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function () {
+            const cv = document.getElementById('cv');
+            html2canvas(cv, { scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+                let imgHeight = pdfHeight;
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+                heightLeft -= pdf.internal.pageSize.getHeight();
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+                    heightLeft -= pdf.internal.pageSize.getHeight();
+                }
+
+                pdf.save('CV.pdf');
+            });
+        });
+    </script>
+</body>
+
+</html>
