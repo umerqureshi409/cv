@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="cv.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link rel="icon" type="image/x-icon" href="umer.jpeg" />
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/umerqureshi409/MCASEL/main/images/umer.jpeg" />
 </head>
 
 <body>
     <div class="container" id="cv">
         <header>
             <h1>M.Umer Qureshi</h1>
-            <img src="umer.jpeg" style="height: 200px; width: 200px; border: 4px solid #00aad4; border-radius: 50%; 
+            <img src="https://raw.githubusercontent.com/umerqureshi409/MCASEL/main/images/umer.jpeg" style="height: 200px; width: 200px; border: 4px solid #00aad4; border-radius: 50%; 
              box-shadow: 0px 0px 40px rgba(15, 59, 70, 0.5);" alt="" />
 
             <h2><span class="contact">Contact: 03213021673</span> <span class="email">Email: aa1660026@gmail.com</span>
@@ -83,32 +83,40 @@
     <button id="downloadBtn">Download as PDF</button>
 
     <script>
-        document.getElementById('downloadBtn').addEventListener('click', function () {
-            const cv = document.getElementById('cv');
-            html2canvas(cv, { scale: 2 }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-                let imgHeight = pdfHeight;
-                let heightLeft = imgHeight;
-                let position = 0;
-
-                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
-                heightLeft -= pdf.internal.pageSize.getHeight();
-
-                while (heightLeft >= 0) {
-                    position = heightLeft - imgHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
-                    heightLeft -= pdf.internal.pageSize.getHeight();
-                }
-
-                pdf.save('CV.pdf');
+        
+            document.getElementById('downloadBtn').addEventListener('click', function () {
+                const cv = document.getElementById('cv');
+                
+                html2canvas(cv, { scale: 2, useCORS: true }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                    const pdfHeight = pdf.internal.pageSize.getHeight();
+        
+                    const imgWidth = pdfWidth;
+                    const imgHeight = canvas.height * imgWidth / canvas.width;
+        
+                    let heightLeft = imgHeight;
+                    let position = 0;
+        
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pdfHeight;
+        
+                    while (heightLeft >= 0) {
+                        position = heightLeft - imgHeight;
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                        heightLeft -= pdfHeight;
+                    }
+        
+                    pdf.save('CV.pdf');
+                }).catch(err => {
+                    console.error('Error generating PDF:', err);
+                });
             });
-        });
-    </script>
+        </script>
+        
+    
 </body>
 
 </html>
