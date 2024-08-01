@@ -84,40 +84,60 @@
     <button id="themeToggleBtn"> Dark Theme</button>
 
     <script>
-        
-            document.getElementById('downloadBtn').addEventListener('click', function () {
-                const cv = document.getElementById('cv');
-                
-                html2canvas(cv, { scale: 2, useCORS: true }).then(canvas => {
-                    const imgData = canvas.toDataURL('image/png');
-                    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-                    const pdfWidth = pdf.internal.pageSize.getWidth();
-                    const pdfHeight = pdf.internal.pageSize.getHeight();
-        
-                    const imgWidth = pdfWidth;
-                    const imgHeight = canvas.height * imgWidth / canvas.width;
-        
-                    let heightLeft = imgHeight;
-                    let position = 0;
-        
-                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pdfHeight;
-        
-                    while (heightLeft >= 0) {
-                        position = heightLeft - imgHeight;
-                        pdf.addPage();
-                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                        heightLeft -= pdfHeight;
-                    }
-        
-                    pdf.save('CV.pdf');
-                }).catch(err => {
-                    console.error('Error generating PDF:', err);
-                });
-            });
-         document.getElementById('themeToggleBtn').addEventListener('click', function () {
-            document.body.classList.toggle('dark-mode');
-        });
+document.getElementById('downloadBtn').addEventListener('click', function () {
+    const cv = document.getElementById('cv');
+    
+    // Force style application for correct rendering
+    const darkMode = document.body.classList.contains('dark-mode');
+    const originalStyles = {
+        backgroundColor: getComputedStyle(document.body).backgroundColor,
+        color: getComputedStyle(document.body).color
+    };
+    const newStyles = {
+        backgroundColor: darkMode ? '#000000' : '#ffffff',
+        color: darkMode ? '#e0e0e0' : '#000000'
+    };
+    
+    cv.style.backgroundColor = newStyles.backgroundColor;
+    cv.style.color = newStyles.color;
+
+    html2canvas(cv, { scale: 2, useCORS: true }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+
+        const imgWidth = pdfWidth;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+
+        while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pdfHeight;
+        }
+
+        pdf.save('CV.pdf');
+
+        // Revert styles to original
+        cv.style.backgroundColor = originalStyles.backgroundColor;
+        cv.style.color = originalStyles.color;
+    }).catch(err => {
+        console.error('Error generating PDF:', err);
+    });
+});
+
+document.getElementById('themeToggleBtn').addEventListener('click', function () {
+    document.body.classList.toggle('dark-mode');
+    this.textContent = document.body.classList.contains('dark-mode') ? 'Light Theme' : 'Dark Theme';
+});
+
         </script>
         
     
