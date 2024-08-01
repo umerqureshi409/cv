@@ -81,6 +81,7 @@
         </div>
     </div>
     <button id="downloadBtn">Download as PDF</button>
+    <button id="themeToggleBtn"> Dark Theme</button>
 
     <script>
         
@@ -114,6 +115,9 @@
                     console.error('Error generating PDF:', err);
                 });
             });
+         document.getElementById('themeToggleBtn').addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+        });
         </script>
         
     
